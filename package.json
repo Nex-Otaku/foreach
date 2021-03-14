@@ -1,0 +1,22 @@
+{
+  "name": "@nex-otaku/foreach",
+  "version": "1.0.0",
+  "description": "Execute command for each file or directory",
+  "main": "foreach.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "preferGlobal": true,
+  "bin": "./foreach.js",
+  "keywords": [
+    "bash",
+    "tool",
+    "foreach"
+  ],
+  "author": "Nex Otaku",
+  "license": "MIT",
+  "dependencies": {
+    "child-process-promise": "^2.2.1",
+    "commander": "^7.1.0"
+  }
+}
