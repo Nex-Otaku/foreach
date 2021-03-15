@@ -102,7 +102,7 @@ const getAllNestedDirectories = (
     let results = [].concat(directories);
 
     for (let i = 0; i < directories.length; i++) {
-        const directory = directories[0];
+        const directory = directories[i];
 
         results = results.concat(getAllNestedDirectories(directory));
     }
