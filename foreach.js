@@ -13,6 +13,7 @@ commander.version('0.1.0')
     .arguments('<path-to-files> <action...>')
     .option('-d, --directory', 'only directories')
     .option('-f, --file', 'only files')
+    .option('-r, --recursive', 'search recursively')
     .description('Applies command to all files and directories found at specified path', {
         path: 'Path for searching files and directories, optionally with mask',
         action: 'Command to execute on each file and folder'

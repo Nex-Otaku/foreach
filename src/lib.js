@@ -22,7 +22,8 @@ const buildCommand = (action, filepath) => {
 const applyCommand = async (path, action, options) => {
     const onlyFiles = 'file' in options && options.file === true;
     const onlyDirectories = 'directory' in options && options.directory === true;
-    const entries = files.getFilesWithMask(path, '', onlyFiles, onlyDirectories);
+    const recursive = 'recursive' in options && options.recursive === true;
+    const entries = files.getFilesWithMask(path, '', onlyFiles, onlyDirectories, recursive);
 
     if (entries.length === 0) {
         console.log('No matched files.');

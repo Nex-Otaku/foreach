@@ -11,10 +11,34 @@ const getCurrentDirectory = () => {
 };
 
 const directoryExists = (filePath) => {
-    return fs.existsSync(filePath) && fs.lstatSync(filePath).isDirectory();
+    let exists = false;
+
+    try {
+        exists = fs.existsSync(filePath) && fs.lstatSync(filePath).isDirectory();
+    } catch (error) {
+        return false;
+    }
+
+    return exists;
 };
 
-const getFilesWithMask = (filePath, mask, onlyFiles, onlyDirectories) => {
+const pathStartsFromRoot = (filePath) => {
+    return filePath.startsWith(path.sep) || filePath.match(/[a-zA-Z]:[\\\/]/);
+}
+
+const getFullFilePath = (filePath, filename) => {
+    const basePath = pathStartsFromRoot(filePath) ? filePath : getCurrentDirectory() + path.sep + filePath;
+    const fullPath = basePath + path.sep + filename;
+
+    return path.normalize(fullPath);
+};
+
+const searchInDirectory = (
+    filePath,
+    mask,
+    onlyFiles,
+    onlyDirectories
+) => {
     if (!directoryExists(filePath)) {
         return [];
     }
@@ -25,12 +49,8 @@ const getFilesWithMask = (filePath, mask, onlyFiles, onlyDirectories) => {
         .filter( function( filename ) {
             return isMatchedByMask(filename, '*');
         })
-        .map(filename => {
-            const basePath = filePath.startsWith(path.sep) ? filePath : getCurrentDirectory() + path.sep + filePath;
-            const fullPath = basePath + path.sep + filename;
+        .map(filename => { return getFullFilePath(filePath, filename); });
 
-            return path.normalize(fullPath);
-        });
 
     if (onlyFiles) {
         files = files.filter((filename) => { return !directoryExists(filename); });
@@ -41,6 +61,47 @@ const getFilesWithMask = (filePath, mask, onlyFiles, onlyDirectories) => {
     }
 
     return files;
+};
+
+const getAllNestedDirectories = (filePath) => {
+    if (!directoryExists(filePath)) {
+        return [];
+    }
+
+    const dirCont = fs.readdirSync(filePath);
+    const paths = dirCont.map(filename => { return getFullFilePath(filePath, filename); });
+    const directories = paths.filter((path) => { return directoryExists(path); });
+    let results = [].concat(directories);
+
+    for (let i = 0; i < directories.length; i++) {
+        const directory = directories[0];
+
+        results = results.concat(getAllNestedDirectories(directory));
+    }
+
+    return results;
+};
+
+const getFilesWithMask = (
+    filePath,
+    mask,
+    onlyFiles,
+    onlyDirectories,
+    recursive
+) => {
+    if (recursive) {
+        const directories = getAllNestedDirectories(filePath);
+        let results = [];
+
+        for (let i = 0; i < directories.length; i++) {
+            const directory = directories[i];
+            results = results.concat(searchInDirectory(directory, mask, onlyFiles, onlyDirectories));
+        }
+
+        return results;
+    }
+
+    return searchInDirectory(filePath, mask, onlyFiles, onlyDirectories);
 };
 
 module.exports = {
