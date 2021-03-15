@@ -33,11 +33,19 @@ const getFullFilePath = (filePath, filename) => {
     return path.normalize(fullPath);
 };
 
+const isDotDirectory = (dirname) => {
+    return dirname !== '.'
+        && dirname !== '..'
+        && dirname.startsWith('.');
+};
+
 const searchInDirectory = (
     filePath,
     mask,
     onlyFiles,
-    onlyDirectories
+    onlyDirectories,
+    includeDotDirectories,
+    includeDirectoriesIgnoredByGit
 ) => {
     if (!directoryExists(filePath)) {
         return [];
@@ -49,6 +57,7 @@ const searchInDirectory = (
         .filter( function( filename ) {
             return isMatchedByMask(filename, '*');
         })
+        .filter(dirname => { return includeDotDirectories || !isDotDirectory(dirname); })
         .map(filename => { return getFullFilePath(filePath, filename); });
 
 
@@ -63,12 +72,18 @@ const searchInDirectory = (
     return files;
 };
 
-const getAllNestedDirectories = (filePath) => {
+const getAllNestedDirectories = (
+    filePath,
+    includeDotDirectories,
+    includeDirectoriesIgnoredByGit
+) => {
     if (!directoryExists(filePath)) {
         return [];
     }
 
-    const dirCont = fs.readdirSync(filePath);
+    const dirCont = fs.readdirSync(filePath)
+        .filter(dirname => { return includeDotDirectories || !isDotDirectory(dirname); });
+
     const paths = dirCont.map(filename => { return getFullFilePath(filePath, filename); });
     const directories = paths.filter((path) => { return directoryExists(path); });
     let results = [].concat(directories);
@@ -87,21 +102,41 @@ const getFilesWithMask = (
     mask,
     onlyFiles,
     onlyDirectories,
-    recursive
+    recursive,
+    includeDotDirectories,
+    includeDirectoriesIgnoredByGit
 ) => {
+    let results = searchInDirectory(
+        filePath,
+        mask,
+        onlyFiles,
+        onlyDirectories,
+        includeDotDirectories,
+        includeDirectoriesIgnoredByGit
+    );
+
     if (recursive) {
-        const directories = getAllNestedDirectories(filePath);
-        let results = [];
+        const directories = getAllNestedDirectories(
+            filePath,
+            includeDotDirectories,
+            includeDirectoriesIgnoredByGit
+        );
 
         for (let i = 0; i < directories.length; i++) {
             const directory = directories[i];
-            results = results.concat(searchInDirectory(directory, mask, onlyFiles, onlyDirectories));
-        }
 
-        return results;
+            results = results.concat(searchInDirectory(
+                directory,
+                mask,
+                onlyFiles,
+                onlyDirectories,
+                includeDotDirectories,
+                includeDirectoriesIgnoredByGit
+            ));
+        }
     }
 
-    return searchInDirectory(filePath, mask, onlyFiles, onlyDirectories);
+    return results;
 };
 
 module.exports = {

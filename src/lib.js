@@ -23,7 +23,17 @@ const applyCommand = async (path, action, options) => {
     const onlyFiles = 'file' in options && options.file === true;
     const onlyDirectories = 'directory' in options && options.directory === true;
     const recursive = 'recursive' in options && options.recursive === true;
-    const entries = files.getFilesWithMask(path, '', onlyFiles, onlyDirectories, recursive);
+    const includeDotDirectories = 'includeDotDirectories' in options && options.includeDotDirectories === true;
+    const includeDirectoriesIgnoredByGit = 'includeDirectoriesIgnoredByGit' in options && options.includeDirectoriesIgnoredByGit === true;
+    const entries = files.getFilesWithMask(
+        path,
+        '',
+        onlyFiles,
+        onlyDirectories,
+        recursive,
+        includeDotDirectories,
+        includeDirectoriesIgnoredByGit
+    );
 
     if (entries.length === 0) {
         console.log('No matched files.');
