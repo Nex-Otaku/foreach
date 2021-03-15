@@ -19,8 +19,10 @@ const buildCommand = (action, filepath) => {
     return action + ' ' + filepath;
 };
 
-const applyCommand = async (path, action) => {
-    const entries = files.getFilesWithMask(path, '');
+const applyCommand = async (path, action, options) => {
+    const onlyFiles = 'file' in options && options.file === true;
+    const onlyDirectories = 'directory' in options && options.directory === true;
+    const entries = files.getFilesWithMask(path, '', onlyFiles, onlyDirectories);
 
     if (entries.length === 0) {
         console.log('No matched files.');
@@ -37,7 +39,7 @@ const applyCommand = async (path, action) => {
 };
 
 module.exports = {
-    applyCommand: async (path, action) => {
-        await applyCommand(path, action);
+    applyCommand: async (path, action, options) => {
+        await applyCommand(path, action, options);
     }
 }

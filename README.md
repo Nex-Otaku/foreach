@@ -1,18 +1,31 @@
 # For Each
 
-Apply a command to multiple files and directories with ForEach
+Apply a command to multiple files and directories with **ForEach**
 
 ## How it works
 
  - Takes a path to directory optionally with a mask
- - Applies command to every file or directory
+ - Applies command **for each** file or directory in this path
 
 ## Examples
 
 ```bash
 # Remove all temporary files from home
 foreach ~/*.tmp rm
+
+# List all files and directories in current directory
+foreach . echo
+
+# List current Git branch for all projects
+foreach --directory ~/projects "cd <file> && git status | grep branch"
 ```
+
+## Options
+
+Option | Description
+--- | ---
+**-d, --directory** | Apply command only to directories
+**-f, --file** | Apply command only to files
 
 ## Getting Started
 
@@ -48,8 +61,6 @@ foreach path/to/directory your-action
  - Register package on NPM
  - File mask support
  - Recursive search
- - Only files
- - Only folders
  - Continue after failed commands
  - Add more examples  
  - Remember last 10 commands
