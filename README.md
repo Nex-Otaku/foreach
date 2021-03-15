@@ -2,13 +2,6 @@
 
 Apply a command to multiple files and directories with **ForEach**
 
-## How it works
-
- - Takes a path to directory optionally with a mask
- - Applies command **for each** file or directory in this path
-
-## Examples
-
 ```bash
 # Remove all temporary files from home
 foreach ~/*.tmp rm
@@ -18,7 +11,15 @@ foreach . echo
 
 # List current Git branch for all projects
 foreach --directory ~/projects "cd <file> && git status | grep branch"
+
+# Change all Windows line endings to Unix (CRLF to LF)
+foreach --file --recursive ~/projects dos2unix
 ```
+
+## How it works
+
+ - Takes a path to directory optionally with a mask
+ - Applies command **for each** file or directory in this path
 
 ## Options
 
@@ -58,6 +59,13 @@ npm link
 ```
 foreach path/to/directory your-action
 ```
+
+## Features
+
+ - Recursive search is supported
+ - Respects ".gitignore" rules
+ - Skips directories with dot - ".git", ".idea" etc
+ - Search can be limited to files or to directories
 
 ## To Be Done
 
