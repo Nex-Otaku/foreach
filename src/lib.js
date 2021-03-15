@@ -20,11 +20,11 @@ const buildCommand = (action, filepath) => {
 };
 
 const applyCommand = async (path, action, options) => {
-    const onlyFiles = 'file' in options && options.file === true;
-    const onlyDirectories = 'directory' in options && options.directory === true;
-    const recursive = 'recursive' in options && options.recursive === true;
-    const includeDotDirectories = 'includeDotDirectories' in options && options.includeDotDirectories === true;
-    const includeDirectoriesIgnoredByGit = 'includeDirectoriesIgnoredByGit' in options && options.includeDirectoriesIgnoredByGit === true;
+    const onlyFiles = options.file === true;
+    const onlyDirectories = options.directory === true;
+    const recursive = options.recursive === true;
+    const includeDotDirectories = options.includeDotDirectories === true;
+    const includeDirectoriesIgnoredByGit = options.includeDirectoriesIgnoredByGit === true;
     const entries = searcher.getFilesWithMask(
         path,
         '',
