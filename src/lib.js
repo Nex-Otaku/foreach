@@ -1,4 +1,4 @@
-const files = require('./files');
+const searcher = require('./searcher');
 const exec = require('child-process-promise').exec;
 
 const shellRun = async (command) => {
@@ -25,7 +25,7 @@ const applyCommand = async (path, action, options) => {
     const recursive = 'recursive' in options && options.recursive === true;
     const includeDotDirectories = 'includeDotDirectories' in options && options.includeDotDirectories === true;
     const includeDirectoriesIgnoredByGit = 'includeDirectoriesIgnoredByGit' in options && options.includeDirectoriesIgnoredByGit === true;
-    const entries = files.getFilesWithMask(
+    const entries = searcher.getFilesWithMask(
         path,
         '',
         onlyFiles,

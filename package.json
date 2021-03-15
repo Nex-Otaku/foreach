@@ -17,6 +17,8 @@
   "license": "MIT",
   "dependencies": {
     "child-process-promise": "^2.2.1",
-    "commander": "^7.1.0"
+    "commander": "^7.1.0",
+    "ignore": "^5.1.8",
+    "parse-gitignore": "^1.0.1"
   }
 }
