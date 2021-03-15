@@ -26,6 +26,7 @@ Option | Description
 --- | ---
 **-d, --directory** | Apply command only to directories
 **-f, --file** | Apply command only to files
+**-r, --recursive** | Search recursively
 **--include-dot-directories** | Look inside directories with names started with dot - ".git", ".idea" etc. Ignoring these directories by default.
 **--include-directories-ignored-by-git** | Do not use ".gitignore" rules. By default we skip all directories mentioned in ".gitignore".
 
