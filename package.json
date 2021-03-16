@@ -1,5 +1,5 @@
 {
-  "name": "@nex-otaku/foreach",
+  "name": "@nex_otaku/foreach",
   "version": "1.0.0",
   "description": "Execute command for each file or directory",
   "main": "foreach.js",
@@ -7,7 +7,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "preferGlobal": true,
-  "bin": "./foreach.js",
+  "bin": {
+    "foreach": "./foreach.js"
+  },
   "keywords": [
     "bash",
     "tool",
