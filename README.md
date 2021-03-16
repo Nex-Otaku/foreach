@@ -33,25 +33,10 @@ Option | Description
 
 ## Getting Started
 
-### Prerequisites
-
-For use this tool, you need [NodeJS](https://nodejs.org/).
-
-### Installing
-
-You can run tool from its own repo.
+To use this tool, you need [NodeJS](https://nodejs.org/).
 
 ```
-Clone the repo
-cd foreach
-```
-
-Or just install it globally to run from anywhere.
-
-```
-Clone the repo
-cd foreach
-npm link
+npm install -g @nex_otaku/foreach
 ```
 
 ## Usage
@@ -69,7 +54,6 @@ foreach path/to/directory your-action
 
 ## To Be Done
 
- - Register package on NPM
  - File mask support
  - Continue after failed commands
  - Add more examples  
