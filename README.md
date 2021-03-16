@@ -36,7 +36,7 @@ Option | Description
 To use this tool, you need [NodeJS](https://nodejs.org/).
 
 ```
-npm install -g @nex_otaku/foreach
+sudo npm install -g @nex_otaku/foreach
 ```
 
 ## Usage
