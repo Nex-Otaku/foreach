@@ -23,6 +23,10 @@ const isIgnoredForRoot = (root, filePath) => {
         return false;
     }
 
+    if (filePath === root.rootPath) {
+        return false;
+    }
+
     const relativePath = filePath.substring(root.rootPath.length);
     const normalizedRelativePath = makeForwardSlashes(stripFirstSlash(relativePath)) + '/';
 
