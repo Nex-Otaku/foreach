@@ -14,6 +14,7 @@ commander.version('0.1.0')
     .option('-d, --directory', 'only directories')
     .option('-f, --file', 'only files')
     .option('-r, --recursive', 'search recursively')
+    .option('-m, --mask <mask>', 'filter name by mask', '*')
     .option('--include-dot-directories', 'do not skip directories with names started with dot - ".git", ".idea" etc')
     .option('--include-directories-ignored-by-git', 'do not skip ".gitignore"\'d directories')
     .description('Applies command to all files and directories found at specified path', {

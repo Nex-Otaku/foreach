@@ -23,11 +23,13 @@ const applyCommand = async (path, action, options) => {
     const onlyFiles = options.file === true;
     const onlyDirectories = options.directory === true;
     const recursive = options.recursive === true;
+    const mask = options.mask || '*';
     const includeDotDirectories = options.includeDotDirectories === true;
     const includeDirectoriesIgnoredByGit = options.includeDirectoriesIgnoredByGit === true;
+
     const entries = searcher.getFilesWithMask(
         path,
-        '',
+        mask,
         onlyFiles,
         onlyDirectories,
         recursive,

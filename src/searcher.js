@@ -4,8 +4,23 @@ const files = require('./files');
 const gitignore = require('./gitignore');
 
 const isMatchedByMask = (filename, mask) => {
-    // TODO
-    return true;
+    if (mask === '*') {
+        return true;
+    }
+
+    if (!mask.includes('*')) {
+        return filename === mask;
+    }
+
+    if (mask.startsWith('*')) {
+        return filename.endsWith(mask.substring(1));
+    }
+
+    if (mask.endsWith('*')) {
+        return filename.startsWith(mask.substring(0, mask.length - 1));
+    }
+
+    return false;
 };
 
 const getCurrentDirectory = () => {
@@ -56,7 +71,7 @@ const searchInDirectory = (
 
     let paths = dirCont
         .filter( function( filename ) {
-            return isMatchedByMask(filename, '*');
+            return isMatchedByMask(filename, mask);
         })
         .filter(dirname => {
             const fullPath = getFullFilePath(filePath, dirname);

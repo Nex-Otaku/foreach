@@ -4,7 +4,7 @@ Apply a command to multiple files and directories with **ForEach**
 
 ```bash
 # Remove all temporary files from home
-foreach ~/*.tmp rm
+foreach --file --mask "*.tmp" ~ rm
 
 # List all files and directories in current directory
 foreach . echo
@@ -14,6 +14,9 @@ foreach --directory ~/projects "cd <file> && git status | grep branch"
 
 # Change all Windows line endings to Unix (CRLF to LF)
 foreach --file --recursive ~/projects dos2unix
+
+# Change all tabs to spaces in PHP source files
+foreach --file --mask "*.php" --recursive ~/projects/myproject "expand -i -t 4 <file> | sponge <file>"
 ```
 
 ## How it works
@@ -28,6 +31,7 @@ Option | Description
 **-d, --directory** | Apply command only to directories
 **-f, --file** | Apply command only to files
 **-r, --recursive** | Search recursively
+**-m, --mask** | Search mask, applied only to search results
 **--include-dot-directories** | Look inside directories with names started with dot - ".git", ".idea" etc. Ignoring these directories by default.
 **--include-directories-ignored-by-git** | Do not use ".gitignore" rules. By default we skip all directories mentioned in ".gitignore".
 
