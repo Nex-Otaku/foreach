@@ -3,7 +3,7 @@
 const commander = require('commander');
 const lib = require('./src/lib');
 
-commander.version('0.1.0')
+commander.version('1.1.0')
     .on('--help', () => {
         console.log('')
         console.log('Examples:')

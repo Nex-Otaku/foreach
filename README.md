@@ -55,14 +55,14 @@ foreach path/to/directory your-action
  - Respects ".gitignore" rules
  - Skips directories with dot - ".git", ".idea" etc
  - Search can be limited to files or to directories
+ - Search by mask
 
 ## To Be Done
 
- - File mask support
  - Continue after failed commands
- - Add more examples  
  - Remember last 10 commands
  - Input from file
+ - Dry run mode
 
 
 ## License
